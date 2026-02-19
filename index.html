@@ -377,14 +377,16 @@
         closeModal("withdrawModal");
 
     } catch (error) {
-    console.error("Withdraw error:", error);
+        console.error("Withdraw error:", error);
 
-    alert("Error: " + (error?.message || error));
+        alert("Error: " + (error?.message || error));
 
-    if (window.Telegram?.WebApp) {
-        Telegram.WebApp.showAlert("Error: " + (error?.message || error));
+        if (window.Telegram?.WebApp) {
+            Telegram.WebApp.showAlert("Error: " + (error?.message || error));
+        }
     }
-}
+
+}   // 👈 এইটা add করো (function close)
     
         
         function renderHistory() {
