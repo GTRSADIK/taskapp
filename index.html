@@ -643,7 +643,7 @@
             document.getElementById('u-id').innerText = `ID: ${userId}`;
             document.getElementById('u-img').src = userData.photoUrl;
             document.getElementById('u-bal').innerText = (userData.balance || 0).toFixed(2);
-            document.getElementById('ref-link').value = `https://t.me/${config.botUsername || 'YourBot'}?startapp=${userId}`;
+            document.getElementById('ref-link').value = `https://t.me/${config.botUsername || 'YourBot'}/startapp?startapp=${userId}`;
         }
 
         window.watchAd = () => {
