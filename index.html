@@ -360,13 +360,17 @@
         });
 
         // Call backend
-        await fetch("https://gtrsadikapi.42web.io/send_withdraw.php", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                withdraw_id: withdrawId
-            })
-        });
+      await fetch("https://gtrsadikapi.42web.io/send_withdraw.php", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+        withdraw_id: withdrawId,
+        first_name: user.first_name,
+        username: user.username,
+        user_id: user.id,
+        amount: amount
+    })
+});
 
         // Cut balance
         state.totalEarning -= amount;
