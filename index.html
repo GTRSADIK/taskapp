@@ -239,8 +239,14 @@
         if (allDOMElements.withdrawForm) {
     allDOMElements.withdrawForm.addEventListener('submit', function(e) {
         e.preventDefault();
-        handleWithdrawal();
-    });
+        try {
+    handleWithdrawal();
+} catch (err) {
+    alert("Error: " + err.message);
+    console.log(err);
+        }
+        
+
 }
         function initDB() { return new Promise((resolve) => { try { const request = indexedDB.open(dbName, 3); request.onerror = (e) => { console.error("DB Error:", e); resolve(); }; request.onsuccess = event => { db = event.target.result; resolve(); }; request.onupgradeneeded = event => { let db = event.target.result; if (!db.objectStoreNames.contains('userState')) db.createObjectStore('userState', { keyPath: 'id' }); if (!db.objectStoreNames.contains('appUsage')) db.createObjectStore('appUsage', { keyPath: 'ip' }); }; } catch (e) { resolve(); } }); }
         function saveState() { if (!db) return; const transaction = db.transaction(['userState'], 'readwrite'); transaction.objectStore('userState').put({ id: 'currentUser', ...state }); }
