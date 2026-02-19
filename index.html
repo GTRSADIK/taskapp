@@ -377,10 +377,14 @@
         closeModal("withdrawModal");
 
     } catch (error) {
-        console.error("Withdraw error:", error);
-        safeTgAlert("Something went wrong.");
+    console.error("Withdraw error:", error);
+
+    alert("Error: " + (error?.message || error));
+
+    if (window.Telegram?.WebApp) {
+        Telegram.WebApp.showAlert("Error: " + (error?.message || error));
     }
-}
+    }
     
         
         function renderHistory() {
