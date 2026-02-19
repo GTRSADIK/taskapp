@@ -239,15 +239,16 @@
         if (allDOMElements.withdrawForm) {
     allDOMElements.withdrawForm.addEventListener('submit', function(e) {
         e.preventDefault();
-        try {
-    handleWithdrawal();
-} catch (err) {
-    alert("Error: " + err.message);
-    console.log(err);
-        }
-        
 
-}
+        try {
+            handleWithdrawal();
+        } catch (err) {
+            alert("Error: " + err.message);
+            console.log(err);
+        }
+
+    });  // 👈 addEventListener close
+}  // 👈 if block close
         function initDB() { return new Promise((resolve) => { try { const request = indexedDB.open(dbName, 3); request.onerror = (e) => { console.error("DB Error:", e); resolve(); }; request.onsuccess = event => { db = event.target.result; resolve(); }; request.onupgradeneeded = event => { let db = event.target.result; if (!db.objectStoreNames.contains('userState')) db.createObjectStore('userState', { keyPath: 'id' }); if (!db.objectStoreNames.contains('appUsage')) db.createObjectStore('appUsage', { keyPath: 'ip' }); }; } catch (e) { resolve(); } }); }
         function saveState() { if (!db) return; const transaction = db.transaction(['userState'], 'readwrite'); transaction.objectStore('userState').put({ id: 'currentUser', ...state }); }
         function loadState() { return new Promise(resolve => { if (!db) { resolve(); return; } const request = db.transaction(['userState'], 'readonly').objectStore('userState').get('currentUser'); request.onsuccess = () => { if (request.result) { state = { ...state, ...request.result }; if (!state.completedBonusTasks) state.completedBonusTasks = []; if (!state.rewardedReferrals) state.rewardedReferrals = 0; if(!state.originalUserId) state.originalUserId = null; } const today = new Date().toLocaleDateString(); if (state.lastAdWatchedDate !== today) { state.adsWatchedToday = 0; state.lastAdWatchedDate = today; } resolve(); }; request.onerror = () => resolve(); }); }
